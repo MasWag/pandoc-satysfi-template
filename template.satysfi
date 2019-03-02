@@ -1,0 +1,12 @@
+@require: stdja
+@require: itemize
+@require: code
+
+document (|
+  title = {$title$};
+  author = {$author$};
+  show-title = $if(show-title)$true$else$false$endif$;
+  show-toc = $if(toc)$true$else$false$endif$;
+|) '<
+$body$
+>
