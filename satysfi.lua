@@ -132,7 +132,8 @@ function Emph(s)
 end
 
 function Strong(s)
-  return "<strong>" .. s .. "</strong>"
+--  return "<strong>" .. s .. "</strong>"
+  return "\\emph{" .. s .. "}"
 end
 
 function Subscript(s)

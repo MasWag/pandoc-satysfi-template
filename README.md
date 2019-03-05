@@ -10,7 +10,7 @@ A pandoc custom writer and template for SATySFi. You can convert any files suppo
 Remark
 ======
 
-This pandoc writer is incomplete i.e., it is unimplemented for some elements. Your contribution is highly appreciated!!
+This pandoc writer is *incomplete* i.e., it is unimplemented for some elements. Your contribution is **highly appreciated!!**
 
 Requirements
 ============
