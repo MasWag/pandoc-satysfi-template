@@ -1,0 +1,16 @@
+box:
+  id: amutake/satysfi
+  entrypoint: sudo
+
+build:
+  steps:
+    - install-packages:
+        packages: pandoc build-essential
+    - script:
+        name: link SATySFi
+        code: |
+          ln -s /home/opam/.opam/*/bin/satysfi /usr/local/bin/satysfi
+    - script:
+        name: compile README
+        code: |
+          make

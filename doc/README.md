@@ -1,4 +1,6 @@
-[![wercker status](https://app.wercker.com/status/408e4e794596f9cc8b2858e2d52a3594/s/master "wercker status")](https://app.wercker.com/project/byKey/408e4e794596f9cc8b2858e2d52a3594)
+% pandoc-satysfi-template
+% Masaki Waga
+% 
 
 pandoc-satysfi-template
 =======================
