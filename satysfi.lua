@@ -164,7 +164,11 @@ function Image(s, src, tit, attr)
 end
 
 function Code(s, attr)
-  return "\\code(`" .. escape(s) .. "`);"
+  local backquote = "`"
+  while string.match(s, backquote) do
+    backquote = backquote .. "`"
+  end
+  return "\\code(" .. backquote .. escape(s) .. backquote .. ");"
 end
 
 function InlineMath(s)
@@ -270,7 +274,11 @@ function CodeBlock(s, attr)
     return '<img src="data:image/png;base64,' .. png .. '"/>'
   -- otherwise treat as code (one could pipe through a highlighter)
   else
-    return "+code(`" .. escape(s) .. "`);"
+    local backquote = "`"
+    while string.match(s, backquote) do
+      backquote = backquote .. "`"
+    end
+    return "+code(" .. backquote .. "\n" .. escape(s) .. backquote .. ");"
   end
 end
 
