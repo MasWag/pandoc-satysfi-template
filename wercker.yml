@@ -1,6 +1,5 @@
 box:
   id: amutake/satysfi
-  entrypoint: sudo
 
 build:
   steps:
