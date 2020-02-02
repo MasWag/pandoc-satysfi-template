@@ -247,6 +247,8 @@ function Header(lev, s, attr)
     section = "+section"
   elseif lev == 2 then
     section = "+subsection"
+  elseif lev == 3 then
+    section = "+subsubsection"
   end
   -- attributes(attr)
   header_level = lev
