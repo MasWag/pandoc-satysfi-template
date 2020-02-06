@@ -153,9 +153,7 @@ function Strikeout(s)
 end
 
 function Link(s, src, tit, attr)
-     return s
----  return "<a href='" .. escape(src,true) .. "' title='" ..
----         escape(tit,true) .. "'>" .. s .. "</a>"
+     return "\\href(`" .. escape(src,true) .. "`){" .. s .. "}"
 end
 
 function Image(s, src, tit, attr)
@@ -168,7 +166,7 @@ function Code(s, attr)
   while string.match(s, backquote) do
     backquote = backquote .. "`"
   end
-  return "\\code(" .. backquote .. escape(s) .. backquote .. ");"
+  return "\\code(" .. backquote .. s .. backquote .. ");"
 end
 
 function InlineMath(s)
@@ -280,7 +278,7 @@ function CodeBlock(s, attr)
     while string.match(s, backquote) do
       backquote = backquote .. "`"
     end
-    return "+code(" .. backquote .. "\n" .. escape(s) .. backquote .. ");"
+    return "+code(" .. backquote .. "\n" .. s .. backquote .. ");"
   end
 end
 
