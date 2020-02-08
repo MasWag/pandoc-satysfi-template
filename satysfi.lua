@@ -250,7 +250,12 @@ function Header(lev, s, attr)
   end
   -- attributes(attr)
   header_level = lev
-  return close_paren .. section .. "{" .. s .. "} <" 
+  if attr.id == "" or lev >= 3then
+    id = ""
+  else
+    id = " ?:(`" .. attr.id .. "`) "
+  end
+  return close_paren .. section .. id .. "{" .. s .. "} <" 
 end
 
 function BlockQuote(s)
