@@ -250,7 +250,7 @@ function Header(lev, s, attr)
   end
   -- attributes(attr)
   header_level = lev
-  if attr.id == "" or lev >= 3then
+  if attr.id == "" or lev >= 3 then
     id = ""
   else
     id = " ?:(`" .. attr.id .. "`) "
