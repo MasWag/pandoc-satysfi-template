@@ -14,7 +14,7 @@
 
 -- Character escaping
 local function escape(s, in_attribute)
-    return s:gsub("[<>&\"*{}\\|%%\\*;#$\\@`]",
+    return s:gsub("[<>&\"*{}\\|%%\\*;#$\\\\@`]",
     function(x)
       if x == '*' then
         return "\\*"
