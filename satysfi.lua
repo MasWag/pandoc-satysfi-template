@@ -232,8 +232,7 @@ function Cite(s, cs)
   for _,cit in ipairs(cs) do
     table.insert(ids, cit.citationId)
   end
-  return "<span class=\"cite\" data-citation-ids=\"" .. table.concat(ids, ",") ..
-    "\">" .. s .. "</span>"
+  return "\\cite([`" .. table.concat(ids, "`;`") .. "`]);"
 end
 
 function Plain(s)
