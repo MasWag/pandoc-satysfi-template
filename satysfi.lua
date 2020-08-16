@@ -150,7 +150,8 @@ function SoftBreak()
 end
 
 function LineBreak()
-  return "<br/>"
+  return "\n"
+--  return "<br/>"
 end
 
 function Emph(s)
