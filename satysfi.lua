@@ -95,9 +95,6 @@ local function pipe(cmd, inp)
   return result
 end
 
--- Table to store footnotes, so they can be included at the end.
-local notes = {}
-
 -- Blocksep is used to separate block elements.
 function Blocksep()
   return "\n"
@@ -118,13 +115,6 @@ function Doc(body, metadata, variables)
     table.insert(buffer, s)
   end
   add(body)
-  if #notes > 0 then
-    add('<ol class="footnotes">')
-    for _,note in pairs(notes) do
-      add(note)
-    end
-    add('</ol>')
-  end
   close_paren = ''
   for i = 1, header_level do
     close_paren = close_paren .. '>\n'
@@ -204,16 +194,10 @@ function DisplayMath(s)
   return "+math(${\n" .. escape(math_escape(s)) .. "\n});"
 end
 
+-- Warning: stdja does not support footnote!
 function Note(s)
-  local num = #notes + 1
-  -- insert the back reference right before the final closing tag.
-  s = string.gsub(s,
-          '(.*)</', '%1 <a href="#fnref' .. num ..  '">&#8617;</a></')
-  -- add a list item with the note to the note table.
-  table.insert(notes, '<li id="fn' .. num .. '">' .. s .. '</li>')
-  -- return the footnote reference, linked to the note.
-  return '<a id="fnref' .. num .. '" href="#fn' .. num ..
-            '"><sup>' .. num .. '</sup></a>'
+  raw_string = string.reverse(string.sub(string.reverse(string.sub(s, 5)), 2))
+  return '\\footnote{' .. raw_string .. '}'
 end
 
 function Span(s, attr)
