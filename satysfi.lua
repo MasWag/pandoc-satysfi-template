@@ -310,9 +310,11 @@ end
 function OrderedList(items)
   local buffer = {}
   for _, item in pairs(items) do
-    table.insert(buffer, "<li>" .. item .. "</li>")
+    item = string.gsub(item, "+enumerate{\n([^}]*)\n}", "%1")
+    item = string.gsub(item, "\n%*", "\n**")
+    table.insert(buffer, "* " .. " " .. item)
   end
-  return "<ol>\n" .. table.concat(buffer, "\n") .. "\n</ol>"
+  return "+enumerate{\n" .. table.concat(buffer, "\n") .. "\n}"
 end
 
 function DefinitionList(items)
