@@ -1,6 +1,7 @@
 @require: stdja
 @require: itemize
 @require: code
+@require: math
 
 let font-ratio-cjk = 0.88
 let get-quad-size ctx =

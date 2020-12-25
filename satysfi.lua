@@ -187,11 +187,11 @@ function Code(s, attr)
 end
 
 function InlineMath(s)
-  return "${" .. escape(math_escape(s)) .. "}"
+  return "${" .. math_escape(s) .. "}"
 end
 
 function DisplayMath(s)
-  return "+math(${\n" .. escape(math_escape(s)) .. "\n});"
+  return "+math(${\n" .. math_escape(s) .. "\n});"
 end
 
 -- Warning: stdja does not support footnote!
