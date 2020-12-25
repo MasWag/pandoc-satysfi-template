@@ -228,8 +228,10 @@ function Para(s)
   if no_para then
     no_para = false
     return "{\n  " .. s .. "\n}"
-  elseif string.match (s, "+math") then
+  elseif string.match (s, "^%s*%+math") then
     return s
+  elseif  string.match (s, "%+math") then
+    s = string.gsub(s, "%+math", "\\eqn")
   end
   return "+p {\n  " .. s .. "\n}"
 end
