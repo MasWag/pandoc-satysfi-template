@@ -17,3 +17,15 @@ $$
 \tan\paren{\cos\paren{\sin\paren{\pi / 3}}}
 $$
 world
+
+$$
+\tan\paren{\cos\paren{\sin\paren{\pi / 3}}}
+$$
+world
+
+$$
+\tan\paren{\cos\paren{\sin\paren{\pi / 3}}}
+$$
+$$
+\tan\paren{\cos\paren{\sin\paren{\pi / 3}}}
+$$
