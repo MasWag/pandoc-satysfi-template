@@ -205,11 +205,7 @@ function Span(s, attr)
 end
 
 function RawInline(format, str)
-  if format == "html" then
-    return str
-  else
-    return ''
-  end
+  return str
 end
 
 function Cite(s, cs)
