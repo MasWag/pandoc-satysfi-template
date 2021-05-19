@@ -341,9 +341,22 @@ function html_align(align)
 end
 
 function CaptionedImage(src, tit, caption, attr)
-   return '<div class="figure">\n<img src="' .. escape(src,true) ..
-      '" title="' .. escape(tit,true) .. '"/>\n' ..
-      '<p class="caption">' .. caption .. '</p>\n</div>'
+   if attr.width then
+      width = attr.width
+   else
+      width = '10mm'
+   end
+   -- if attr.id then
+   --    id = '?:(`' .. attr.id .. '`)'
+   -- elseif tit then
+   --    id = '?:(`' .. tit .. '`)'
+   -- else
+      id = ''
+   -- end
+   return '+p{\n  \\figure ' .. id .. ' {' .. caption ..
+      '}<\n    +image-frame{\\insert-image(' .. width ..
+      ')(`' .. escape(src,true) ..
+      '`);}\n>}'
 end
 
 -- Caption is a string, aligns is an array of strings,
