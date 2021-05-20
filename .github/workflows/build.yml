@@ -16,6 +16,6 @@ jobs:
         apt-get install nodejs pandoc build-essential -y
     - uses: actions/checkout@v2.3.4
     - name: link SATySFi
-      run : ln -s /home/opam/.opam/*/bin/satysfi /usr/local/bin/satysfi
+      run : ln -s /root/.opam/*/bin/satysfi /usr/local/bin/satysfi
     - name: Build README
       run: make
