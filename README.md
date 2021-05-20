@@ -1,7 +1,7 @@
 pandoc-satysfi-template
 =======================
 
-[![wercker status](https://app.wercker.com/status/408e4e794596f9cc8b2858e2d52a3594/s/master "wercker status")](https://app.wercker.com/project/byKey/408e4e794596f9cc8b2858e2d52a3594)
+[![Build](https://github.com/MasWag/pandoc-satysfi-template/workflows/Build/badge.svg)](https://github.com/MasWag/pandoc-satysfi-template/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
 A pandoc custom writer and template for [SATySFi](https://github.com/gfngfn/SATySFi). You can convert any files supported by pandoc to SATySFi or PDF. You can generate the SATySFi and PDF versions of this README by `make` in the root directory.
