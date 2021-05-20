@@ -12,10 +12,10 @@ jobs:
     steps:
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install nodejs pandoc build-essential -y
+        apt-get update
+        apt-get install nodejs pandoc build-essential -y
     - uses: actions/checkout@v2.3.4
     - name: link SATySFi
-      run : sudo ln -s /home/opam/.opam/*/bin/satysfi /usr/local/bin/satysfi
+      run : ln -s /home/opam/.opam/*/bin/satysfi /usr/local/bin/satysfi
     - name: Build README
       run: make
