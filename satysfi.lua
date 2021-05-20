@@ -319,7 +319,7 @@ function DefinitionList(items)
   local buffer = {}
   for _,item in pairs(items) do
     local k, v = next(item)
-    table.insert(buffer, "* \\emph{" .. k .. "} " ..
+    table.insert(buffer, "* \\emph{" .. k .. "}: " ..
                    table.concat(v, "\n") .. "")
   end
   return "+listing{\n" .. table.concat(buffer, "\n") .. "\n}"

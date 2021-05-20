@@ -5,7 +5,7 @@
 pandoc-satysfi-template
 =======================
 
-A pandoc custom writer and template for SATySFi. You can convert any files supported by pandoc to SATySFi or PDF. You can generate the SATySFi and PDF versions of this README by `make` in the root directory.
+A pandoc custom writer and template for [\\SATySFi;](https://github.com/gfngfn/SATySFi). You can convert any files supported by pandoc to \\SATySFi; or PDF. You can generate the \\SATySFi; and PDF versions of this README by `make` in the root directory.
 
 Remark
 ======
@@ -16,7 +16,7 @@ Requirements
 ============
 
 * pandoc
-* SATySFi
+* \\SATySFi;
 
 Options
 =======
@@ -32,7 +32,7 @@ toc
 Note
 ====
 
-The template file `template.satysfi` is for a `.saty` file not for a `.satyh` file. If you want to convert to a `.satyh` file, you need to write a template by yourself. It is easy.
+The template file `template.satysfi` is for a `.saty` file not for a `.satyh` file. If you want to convert to a `.satyh` file, you need to write a template by yourself.
 
 Example
 =======

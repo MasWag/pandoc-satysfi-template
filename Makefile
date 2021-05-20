@@ -1,4 +1,6 @@
-doc/README.pdf: doc/README.saty
+all: doc/README.pdf test/example.pdf
+
+%.pdf: %.saty
 	satysfi $<
-doc/README.saty: doc/README.md ./satysfi.lua ./template.satysfi Makefile
-	cat $<  | sed 's/SATySFi/\\\\SATySFi;/g' | pandoc -o $@ -t ./satysfi.lua  -s --template ./template.satysfi -V show-title
+%.saty: %.md ./satysfi.lua ./template.satysfi Makefile
+	pandoc -o $@ -t ./satysfi.lua  -s --template ./template.satysfi -V show-title < $< 
