@@ -201,7 +201,15 @@ function Note(s)
 end
 
 function Span(s, attr)
-  return "<span" .. attributes(attr) .. ">" .. s .. "</span>"
+   -- handles TODO
+   if attr.class and string.match(attr.class, 'todo') then
+      return "\\todo{" .. s .. "}"
+   -- handles DONE
+   elseif attr.class and string.match(attr.class, 'done') then
+      return "\\done{" .. s .. "}"
+   else
+      return "<span" .. attributes(attr) .. ">" .. s .. "</span>"
+   end
 end
 
 function RawInline(format, str)

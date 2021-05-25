@@ -3,6 +3,18 @@
 @require: code
 @require: math
 
+let-inline ctx \todo =
+  let ctx-todo =
+      ctx |> set-text-color Color.red
+    in
+      read-inline ctx-todo
+
+let-inline ctx \done =
+  let ctx-done =
+      ctx |> set-text-color (Color.rgb 0. 1. 0.)
+    in
+      read-inline ctx-done
+
 let font-ratio-cjk = 0.88
 let get-quad-size ctx =
   get-font-size ctx *' font-ratio-cjk
