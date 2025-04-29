@@ -173,9 +173,42 @@ function Link(s, src, tit, attr)
      return "\\href(`" .. escape(src,true) .. "`){" .. s .. "}"
 end
 
-function Image(s, src, tit, attr)
-  return "<img src='" .. escape(src,true) .. "' title='" ..
-         escape(tit,true) .. "'/>"
+function Image(caption, src, tit, attr)
+   if attr.id then
+      id = '?:(`' .. attr.id .. '`)'
+   elseif tit then
+      id = '?:(`' .. tit .. '`)'
+   else
+      id = ''
+   end
+   if attr.width then
+      width = attr.width
+   else
+      width = '10mm'
+   end
+   if caption then
+      if string.match(src, '%.pdf$') then
+         return '+p{\n  \\figure ' .. id .. ' {' .. caption ..
+            '}<\n    +image-frame{\\insert-pdf-image(' .. width ..
+            ')(`' .. escape(src,true) ..
+            '`)(1);}\n>}'
+      else
+         return '+p{\n  \\figure ' .. id .. ' {' .. caption ..
+            '}<\n    +image-frame{\\insert-image(' .. width ..
+            ')(`' .. escape(src,true) ..
+            '`);}\n>}'
+      end
+   else
+      if string.match(src, '%.pdf$') then
+         return '\\insert-pdf-image(' .. width ..
+            ')(`' .. escape(src,true) ..
+            '`)(1);'
+      else
+         return '\\insert-image(' .. width ..
+            ')(`' .. escape(src,true) ..
+            '`);'
+      end
+   end
 end
 
 function Code(s, attr)
@@ -271,7 +304,7 @@ function Header(lev, s, attr)
   else
     id = " ?:(`" .. attr.id .. "`) "
   end
-  return close_paren .. section .. id .. "{" .. s .. "} <" 
+  return close_paren .. section .. id .. "{" .. s .. "} <"
 end
 
 function BlockQuote(s)
@@ -354,17 +387,24 @@ function CaptionedImage(src, tit, caption, attr)
    else
       width = '10mm'
    end
-   -- if attr.id then
-   --    id = '?:(`' .. attr.id .. '`)'
-   -- elseif tit then
-   --    id = '?:(`' .. tit .. '`)'
-   -- else
+   if attr.identifier then
+      id = '?:(`' .. attr.identifier .. '`)'
+   elseif tit then
+      id = '?:(`' .. tit .. '`)'
+   else
       id = ''
-   -- end
-   return '+p{\n  \\figure ' .. id .. ' {' .. caption ..
-      '}<\n    +image-frame{\\insert-image(' .. width ..
-      ')(`' .. escape(src,true) ..
-      '`);}\n>}'
+   end
+      if string.match(src, '%.pdf$') then
+         return '+p{\n  \\figure ' .. id .. ' {' .. caption ..
+            '}<\n    +image-frame{\\insert-pdf-image(' .. width ..
+            ')(`' .. escape(src,true) ..
+            '`)(1);}\n>}'
+      else
+         return '+p{\n  \\figure ' .. id .. ' {' .. caption ..
+            '}<\n    +image-frame{\\insert-image(' .. width ..
+            ')(`' .. escape(src,true) ..
+            '`);}\n>}'
+      end
 end
 
 -- Caption is a string, aligns is an array of strings,
