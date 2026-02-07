@@ -252,9 +252,9 @@ end
 function Cite(s, cs)
   local ids = {}
   for _,cit in ipairs(cs) do
-    table.insert(ids, cit.citationId)
+    table.insert(ids, cit.id or cit.citationId)
   end
-  return "\\cite([`" .. table.concat(ids, "`;`") .. "`]);"
+  return "\\cite([`" .. table.concat(ids, "`;`") .. "`]);";
 end
 
 function Plain(s)
@@ -478,7 +478,7 @@ function Table(caption, aligns, widths, headers, rows)
 end
 
 function RawBlock(format, str)
-  if format == "html" then
+  if format == "satysfi" then
     return str
   else
     return ''
