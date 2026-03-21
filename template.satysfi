@@ -2,6 +2,7 @@
 @require: itemize
 @require: code
 @require: math
+@require: tabular
 
 let-inline ctx \todo =
   let ctx-todo =

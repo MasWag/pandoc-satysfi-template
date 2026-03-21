@@ -336,10 +336,17 @@ function CodeBlock(s, attr)
   end
 end
 
+local function unwrap_itemize_block(item, command)
+  local pattern = "%+" .. command .. "(%b{})"
+  return (string.gsub(item, pattern, function(block)
+    return string.sub(block, 2, -2)
+  end))
+end
+
 function BulletList(items)
   local buffer = {}
   for _, item in pairs(items) do
-    item = string.gsub(item, "+listing{\n([^}]*)\n}", "%1")
+    item = unwrap_itemize_block(item, "listing")
     item = string.gsub(item, "\n%*", "\n**")
     table.insert(buffer, "* " .. " " .. item)
   end
@@ -349,7 +356,7 @@ end
 function OrderedList(items)
   local buffer = {}
   for _, item in pairs(items) do
-    item = string.gsub(item, "+enumerate{\n([^}]*)\n}", "%1")
+    item = unwrap_itemize_block(item, "enumerate")
     item = string.gsub(item, "\n%*", "\n**")
     table.insert(buffer, "* " .. " " .. item)
   end
@@ -365,20 +372,6 @@ function DefinitionList(items)
   end
   return "+listing{\n" .. table.concat(buffer, "\n") .. "\n}"
 
-end
-
--- Convert pandoc alignment to something HTML can use.
--- align is AlignLeft, AlignRight, AlignCenter, or AlignDefault.
-function html_align(align)
-  if align == 'AlignLeft' then
-    return 'left'
-  elseif align == 'AlignRight' then
-    return 'right'
-  elseif align == 'AlignCenter' then
-    return 'center'
-  else
-    return 'left'
-  end
 end
 
 function CaptionedImage(src, tit, caption, attr)
@@ -415,21 +408,14 @@ function Table(caption, aligns, widths, headers, rows)
   local function add(s)
     table.insert(buffer, s)
   end
-  add("+frame<")
-  add("+centering{")
   if caption ~= "" then
-    add("<caption>" .. caption .. "</caption>")
+    add("+pn{\\emph{" .. caption .. "}}")
   end
-  if widths and widths[1] ~= 0 then
-    for _, w in pairs(widths) do
-      add('<col width="' .. string.format("%.0f%%", w * 100) .. '" />')
-    end
-  end
+  add("+pn{")
   local header_row = {}
   local empty_header = true
   add("\\tabular(fun cellf multif empty -> [")
   for i, h in pairs(headers) do
-    local align = html_align(aligns[i])
     table.insert(header_row, h)
     empty_header = empty_header and h == ""
   end
@@ -473,7 +459,6 @@ function Table(caption, aligns, widths, headers, rows)
           ));
   ]]);
   add('}')
-  add('>')
   return table.concat(buffer,'\n')
 end
 
@@ -503,4 +488,3 @@ meta.__index =
     return function() return "" end
   end
 setmetatable(_G, meta)
-
