@@ -12,6 +12,14 @@
 -- produce informative error messages if your code contains
 -- syntax errors.
 
+Extensions = {
+	["exdesign"] = "disable",
+}
+
+local function HasExtension(options, extension)
+	return options ~= nil and options.extensions ~= nil and options.extensions:includes(extension)
+end
+
 -- Character escaping
 local function escape(s, in_attribute)
     return s:gsub("[<>&\"*{}\\|%%\\*;#$\\\\@`]",
@@ -404,14 +412,19 @@ end
 -- widths is an array of floats, headers is an array of
 -- strings, rows is an array of arrays of strings.
 function Table(caption, aligns, widths, headers, rows)
+  print(
+    'The exdesign extension is',
+    PANDOC_WRITER_OPTIONS.extensions:includes 'exdesign' and 'enabled' or 'disabled'
+  )
   local buffer = {}
   local function add(s)
     table.insert(buffer, s)
   end
-  if caption ~= "" then
-    add("+pn{\\emph{" .. caption .. "}}")
+  add("+p{")
+  if caption ~= "" and HasExtension(PANDOC_WRITER_OPTIONS, "exdesign") then
+    add("  \\table {" .. caption .. "} < +centering{")
+  else
   end
-  add("+pn{")
   local header_row = {}
   local empty_header = true
   add("\\tabular(fun cellf multif empty -> [")
@@ -422,24 +435,20 @@ function Table(caption, aligns, widths, headers, rows)
   if empty_header then
     head = ""
   else
----    add('<tr class="header">')
     add("[")
     for _,h in pairs(header_row) do
       add("cellf {" .. h .. "} ;")
     end
     add("];")
---    add('</tr>')
   end
   local class = "even"
   for _, row in pairs(rows) do
     class = (class == "even" and "odd") or "even"
----    add('<tr class="' .. class .. '">')
     add('[')
     for i,c in pairs(row) do
       add('cellf {' .. c .. '};')
     end
     add('];')
-----    add('</tr>')
   end
   add([[          ])(fun xs ys -> (
               match (ys, List.reverse ys) with
@@ -458,6 +467,9 @@ function Table(caption, aligns, widths, headers, rows)
               | _ -> []
           ));
   ]]);
+  if caption ~= "" and HasExtension(PANDOC_WRITER_OPTIONS, "exdesign") then
+    add("}  >")
+  end
   add('}')
   return table.concat(buffer,'\n')
 end
@@ -476,6 +488,13 @@ end
 
 function DoubleQuoted(s)
   return '"' .. s .. '"'
+end
+
+function Writer (doc, opts)
+  PANDOC_DOCUMENT = doc
+  PANDOC_WRITER_OPTIONS = opts
+  loadfile(PANDOC_SCRIPT_FILE)()
+  return pandoc.write_classic(doc, opts)
 end
 
 -- The following code will produce runtime warnings when you haven't defined
