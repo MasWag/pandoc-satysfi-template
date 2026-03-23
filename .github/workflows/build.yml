@@ -23,7 +23,7 @@ jobs:
         ln -s /root/.satysfi/dist /usr/local/share/satysfi/dist
     - name: Install dependent SATySFi package
       run: |
-        opam install satysfi-class-exdesign
-        satyrographos install
+        OPAMYES=true opam install satysfi-class-exdesign
+        OPAMYES=true satyrographos install
     - name: Build README
       run: make
