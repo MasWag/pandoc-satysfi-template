@@ -22,8 +22,12 @@ jobs:
         mkdir -p /usr/local/share/satysfi/
         ln -s /root/.satysfi/dist /usr/local/share/satysfi/dist
     - name: Install dependent SATySFi package
+      env:
+        HOME: /root
       run: |
-        OPAMYES=true opam install satysfi-class-exdesign
-        OPAMYES=true satyrographos install
+        eval $(opam env)
+        opam update
+        opam install satysfi-class-exdesign
+        satyrographos install
     - name: Build README
       run: make
