@@ -7,7 +7,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: amutake/satysfi
+    container: ghcr.io/maswag/satysfi:latest
 
     steps:
     - name: Install dependencies
@@ -21,5 +21,13 @@ jobs:
       run: |
         mkdir -p /usr/local/share/satysfi/
         ln -s /root/.satysfi/dist /usr/local/share/satysfi/dist
+    - name: Install dependent SATySFi package
+      env:
+        HOME: /root
+      run: |
+        eval $(opam env)
+        opam update
+        opam install satysfi-class-exdesign
+        satyrographos install
     - name: Build README
       run: make
