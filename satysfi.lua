@@ -412,10 +412,6 @@ end
 -- widths is an array of floats, headers is an array of
 -- strings, rows is an array of arrays of strings.
 function Table(caption, aligns, widths, headers, rows)
-  print(
-    'The exdesign extension is',
-    PANDOC_WRITER_OPTIONS.extensions:includes 'exdesign' and 'enabled' or 'disabled'
-  )
   local buffer = {}
   local function add(s)
     table.insert(buffer, s)
