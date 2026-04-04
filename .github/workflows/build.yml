@@ -12,6 +12,7 @@ jobs:
     steps:
     - name: Install dependencies
       run: |
+        add-apt-repository ppa:texlive-backports/ppa
         apt-get update
         apt-get install nodejs pandoc build-essential -y
     - uses: actions/checkout@v4
