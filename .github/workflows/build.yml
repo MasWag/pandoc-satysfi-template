@@ -27,7 +27,7 @@ jobs:
       run: |
         eval $(opam env)
         opam update
-        opam install satysfi-class-exdesign
+        opam install satysfi-class-exdesign satysfi-figbox
         satyrographos install
     - name: Build README
       run: make
