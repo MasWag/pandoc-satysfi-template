@@ -1,5 +1,6 @@
 @require: class-exdesign/exdesign
 @require: class-exdesign/article-ja
+@require: figbox/figbox
 @require: itemize
 @require: code
 @require: math
@@ -17,7 +18,23 @@ let-inline ctx \done =
     in
       read-inline ctx-done
 
+let-inline ctx \insert-image width path =
+  FigBox.embed-figbox ctx (FigBox.include-image width path)
+
+let-inline ctx \insert-pdf-image width path page =
+  FigBox.embed-figbox ctx (FigBox.include-image ?:page width path)
+
 let-block ctx +centering it =
+    let text-width = ctx |> get-text-width in
+    let ib = read-inline ctx it in
+    let ib-center =
+      if get-natural-width ib >' text-width then
+        ib ++ inline-fil
+      else
+        inline-fil ++ ib ++ inline-fil
+    in line-break true true ctx ib-center
+
+let-block ctx +image-frame it =
     let text-width = ctx |> get-text-width in
     let ib = read-inline ctx it in
     let ib-center =

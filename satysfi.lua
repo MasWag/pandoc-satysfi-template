@@ -182,9 +182,9 @@ function Link(s, src, tit, attr)
 end
 
 function Image(caption, src, tit, attr)
-   if attr.id then
+   if HasExtension(PANDOC_WRITER_OPTIONS, "exdesign") and attr.id and attr.id ~= "" then
       id = '?:(`' .. attr.id .. '`)'
-   elseif tit then
+   elseif HasExtension(PANDOC_WRITER_OPTIONS, "exdesign") and tit and tit ~= "" then
       id = '?:(`' .. tit .. '`)'
    else
       id = ''
@@ -217,6 +217,16 @@ function Image(caption, src, tit, attr)
             '`);'
       end
    end
+end
+
+function Figure(caption, body, attr)
+   -- Pandoc 3 emits block-level Figure nodes around captioned images.
+   -- The inner Image renderer already produces the SATySFi figure block.
+   if HasExtension(PANDOC_WRITER_OPTIONS, "exdesign") and attr and attr.id and attr.id ~= "" then
+      local figure_id = "?:(`" .. escape(attr.id, true) .. "`)"
+      return (string.gsub(body, "\\figure%s+{", "\\figure " .. figure_id .. " {", 1))
+   end
+   return body
 end
 
 function Code(s, attr)
@@ -388,9 +398,9 @@ function CaptionedImage(src, tit, caption, attr)
    else
       width = '10mm'
    end
-   if attr.identifier then
+   if HasExtension(PANDOC_WRITER_OPTIONS, "exdesign") and attr.identifier and attr.identifier ~= "" then
       id = '?:(`' .. attr.identifier .. '`)'
-   elseif tit then
+   elseif HasExtension(PANDOC_WRITER_OPTIONS, "exdesign") and tit and tit ~= "" then
       id = '?:(`' .. tit .. '`)'
    else
       id = ''

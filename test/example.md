@@ -32,6 +32,11 @@ Hyper Link
 
 Link to [Google](https://google.com)
 
+Figure
+======
+
+![A sample figure included from a local JPEG file.](figure.jpg){width=80mm}
+
 Block Quote
 ===========
 
