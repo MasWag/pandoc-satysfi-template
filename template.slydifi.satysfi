@@ -1,0 +1,27 @@
+@require: figbox/figbox
+@require: enumitem/enumitem
+@require: base/color-ext
+@require: class-slydifi/theme/plain
+
+open FigBox
+open SlydifiOverlay
+
+let-inline ctx \cjk it =
+  let ctx = ctx |> set-dominant-narrow-script Kana in
+  read-inline ctx it
+
+in
+
+document '<
+
+$if(show-title)$
+  +make-title(|
+    title = {|$title$|};
+    author = {|$author$||};
+    date = {| $date$ |};
+  |);
+$endif$
+
+  $body$
+
+>

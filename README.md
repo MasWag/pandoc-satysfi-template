@@ -49,3 +49,9 @@ For captioned tables with `class-exdesign`, use:
 ```bash
     pandoc -t ./satysfi.lua+exdesign --template ./template.exdesign.satysfi -s test/table.md -o test/table-exdesign.saty -V show-title
 ```
+
+For SLyDIFi, use:
+
+```bash
+    pandoc -t ./satysfi.lua+slydifi --template ./template.slydifi.satysfi -s test/slide.md -o test/slide.saty -V show-title
+```

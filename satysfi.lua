@@ -14,6 +14,7 @@
 
 Extensions = {
 	["exdesign"] = "disable",
+	["slydifi"] = "disable",
 }
 
 local function HasExtension(options, extension)
@@ -194,7 +195,9 @@ function Image(caption, src, tit, attr)
    else
       width = '10mm'
    end
-   if caption then
+   if HasExtension(PANDOC_WRITER_OPTIONS, "slydifi") then
+      return '+fig-center(FigBox.include-image ' .. width .. ' `' .. escape(src,true) .. '`);'
+   elseif caption then
       if string.match(src, '%.pdf$') then
          return '+p{\n  \\figure ' .. id .. ' {' .. caption ..
             '}<\n    +image-frame{\\insert-pdf-image(' .. width ..
@@ -263,10 +266,6 @@ function Span(s, attr)
    end
 end
 
-function RawInline(format, str)
-  return str
-end
-
 function Cite(s, cs)
   local ids = {}
   for _,cit in ipairs(cs) do
@@ -311,18 +310,28 @@ function Header(lev, s, attr)
   if lev == 1 then
     section = "+section"
   elseif lev == 2 then
-    section = "+subsection"
+   if HasExtension(PANDOC_WRITER_OPTIONS, "slydifi") then
+      section = "+frame"
+   else
+      section = "+subsection"
+   end
   elseif lev == 3 then
     section = "+subsubsection"
   end
   -- attributes(attr)
   header_level = lev
-  if attr.id == "" or lev >= 3 then
+  if HasExtension(PANDOC_WRITER_OPTIONS, "slydifi") and lev == 2 and attr.overlay and attr.overlay ~= "" then
+     id = " ?:(" .. attr.overlay .. ") "
+  elseif attr.id == "" or lev >= 3 or HasExtension(PANDOC_WRITER_OPTIONS, "slydifi") then
     id = ""
   else
     id = " ?:(`" .. attr.id .. "`) "
   end
-  return close_paren .. section .. id .. "{" .. s .. "} <"
+  if HasExtension(PANDOC_WRITER_OPTIONS, "slydifi") and lev == 1 then
+     return close_paren .. section .. id .. "{|" .. s .. "|} <"
+  else
+     return close_paren .. section .. id .. "{" .. s .. "} <"
+  end
 end
 
 function BlockQuote(s)
@@ -481,6 +490,14 @@ function Table(caption, aligns, widths, headers, rows)
 end
 
 function RawBlock(format, str)
+  if format == "satysfi" then
+    return str
+  else
+    return ''
+  end
+end
+
+function RawInline(format, str)
   if format == "satysfi" then
     return str
   else
